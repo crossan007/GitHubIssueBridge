@@ -18,6 +18,14 @@ require "config.php";
 $serviceURL = "https://api.github.com/repos/" . $GitHubRepoOwner . "/" . $GitHubRepoName . "/issues";
 
 $receivedData = json_decode(file_get_contents('php://input'));
+if(!$receivedData->issueTitle)
+{
+  return "Error, no title supplied";
+}
+if(!$receivedData->issueDescription)
+{
+  return "Error, no description supplied";
+}
 $postdata = new stdClass();
 $postdata->title = FilterInput($receivedData->issueTitle);
 $postdata->body = FilterInput($receivedData->issueDescription);
